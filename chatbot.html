@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Loky YT</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#0f172a,#1e293b);
+  overflow:hidden;
+}
+
+.chat-container{
+  width:370px;
+  height:620px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(12px);
+  border-radius:25px;
+  padding:20px;
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.4),
+    inset 0 0 10px rgba(255,255,255,0.1);
+  transform-style:preserve-3d;
+  transform:rotateY(-10deg) rotateX(5deg);
+  transition:0.4s;
+}
+
+.chat-container:hover{
+  transform:rotateY(0deg) rotateX(0deg) scale(1.03);
+}
+
+.header{
+  text-align:center;
+  color:white;
+  font-size:24px;
+  margin-bottom:20px;
+  text-shadow:0 0 12px rgba(255,255,255,0.5);
+}
+
+.messages{
+  height:470px;
+  overflow-y:auto;
+  padding-right:5px;
+}
+
+.message{
+  max-width:78%;
+  padding:12px 16px;
+  margin:12px 0;
+  border-radius:18px;
+  color:white;
+  font-size:14px;
+  line-height:1.5;
+  animation:pop 0.3s ease;
+}
+
+.user{
+  background:linear-gradient(135deg,#3b82f6,#2563eb);
+  margin-left:auto;
+  box-shadow:0 8px 15px rgba(37,99,235,0.4);
+}
+
+.bot{
+  background:linear-gradient(135deg,#9333ea,#7e22ce);
+  box-shadow:0 8px 15px rgba(126,34,206,0.4);
+}
+
+.input-area{
+  display:flex;
+  margin-top:15px;
+  gap:10px;
+}
+
+.input-area input{
+  flex:1;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  outline:none;
+  background:rgba(255,255,255,0.1);
+  color:white;
+  font-size:14px;
+}
+
+.input-area input::placeholder{
+  color:#ddd;
+}
+
+.input-area button{
+  padding:12px 18px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(135deg,#06b6d4,#0891b2);
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+  transition:0.3s;
+}
+
+.input-area button:hover{
+  transform:scale(1.05);
+  background:linear-gradient(135deg,#22d3ee,#0ea5e9);
+}
+
+@keyframes pop{
+  from{
+    transform:scale(0.8);
+    opacity:0;
+  }
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+.messages::-webkit-scrollbar{
+  width:6px;
+}
+
+.messages::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,0.2);
+  border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="chat-container">
+
+  <div class="header">🤖 AI Chatbot</div>
+
+  <div class="messages" id="messages">
+    <div class="message bot">
+      Hello 👋 Ask me anything!
+    </div>
+  </div>
+
+  <div class="input-area">
+    <input type="text" id="input" placeholder="Type message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+</div>
+
+<script>
+const aiReplies = {
+  hello: "Hello there 👋",
+  hi: "Hi 😄",
+  howareyou: "I'm doing great 🤖",
+  name: "I'm your AI chatbot!",
+  bye: "Goodbye 👋",
+  help: "I can answer simple questions."
+};
+
+function addMessage(text, type){
+  const messages = document.getElementById("messages");
+
+  const msg = document.createElement("div");
+  msg.className = "message " + type;
+  msg.innerText = text;
+
+  messages.appendChild(msg);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function getAIResponse(input){
+
+  let text = input.toLowerCase().replace(/\s/g,'');
+
+  if(text.includes("hello")) return aiReplies.hello;
+  if(text.includes("hi")) return aiReplies.hi;
+  if(text.includes("howareyou")) return aiReplies.howareyou;
+  if(text.includes("yourname")) return aiReplies.name;
+  if(text.includes("bye")) return aiReplies.bye;
+  if(text.includes("help")) return aiReplies.help;
+
+  return "I am still learning 🤖";
+}
+
+function sendMessage(){
+
+  const input = document.getElementById("input");
+  const text = input.value.trim();
+
+  if(text === "") return;
+
+  addMessage(text, "user");
+
+  input.value = "";
+
+  setTimeout(() => {
+    const reply = getAIResponse(text);
+    addMessage(reply, "bot");
+  }, 600);
+}
+
+document.getElementById("input")
+.addEventListener("keypress", function(e){
+  if(e.key === "Enter"){
+    sendMessage();
+  }
+});
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>3D AI Chatbot</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#0f172a,#1e293b);
+  overflow:hidden;
+}
+
+.chat-container{
+  width:370px;
+  height:620px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(12px);
+  border-radius:25px;
+  padding:20px;
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.4),
+    inset 0 0 10px rgba(255,255,255,0.1);
+  transform-style:preserve-3d;
+  transform:rotateY(-10deg) rotateX(5deg);
+  transition:0.4s;
+}
+
+.chat-container:hover{
+  transform:rotateY(0deg) rotateX(0deg) scale(1.03);
+}
+
+.header{
+  text-align:center;
+  color:white;
+  font-size:24px;
+  margin-bottom:20px;
+  text-shadow:0 0 12px rgba(255,255,255,0.5);
+}
+
+.messages{
+  height:470px;
+  overflow-y:auto;
+  padding-right:5px;
+}
+
+.message{
+  max-width:78%;
+  padding:12px 16px;
+  margin:12px 0;
+  border-radius:18px;
+  color:white;
+  font-size:14px;
+  line-height:1.5;
+  animation:pop 0.3s ease;
+}
+
+.user{
+  background:linear-gradient(135deg,#3b82f6,#2563eb);
+  margin-left:auto;
+  box-shadow:0 8px 15px rgba(37,99,235,0.4);
+}
+
+.bot{
+  background:linear-gradient(135deg,#9333ea,#7e22ce);
+  box-shadow:0 8px 15px rgba(126,34,206,0.4);
+}
+
+.input-area{
+  display:flex;
+  margin-top:15px;
+  gap:10px;
+}
+
+.input-area input{
+  flex:1;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  outline:none;
+  background:rgba(255,255,255,0.1);
+  color:white;
+  font-size:14px;
+}
+
+.input-area input::placeholder{
+  color:#ddd;
+}
+
+.input-area button{
+  padding:12px 18px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(135deg,#06b6d4,#0891b2);
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+  transition:0.3s;
+}
+
+.input-area button:hover{
+  transform:scale(1.05);
+  background:linear-gradient(135deg,#22d3ee,#0ea5e9);
+}
+
+@keyframes pop{
+  from{
+    transform:scale(0.8);
+    opacity:0;
+  }
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+.messages::-webkit-scrollbar{
+  width:6px;
+}
+
+.messages::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,0.2);
+  border-radius:10px;
+}
+</style>
+</head>
+<!-- ADD THIS INSIDE <head> -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+<style>
+/* 3D Animated Background */
+
+#bgCanvas{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:-1;
+}
+
+.typing{
+  opacity:0.7;
+  font-style:italic;
+  animation:blink 1s infinite;
+}
+
+@keyframes blink{
+  50%{
+    opacity:0.3;
+  }
+}
+
+/* Neon glow effect */
+
+.chat-container{
+  border:1px solid rgba(255,255,255,0.15);
+  box-shadow:
+    0 0 20px rgba(0,255,255,0.2),
+    0 0 60px rgba(0,255,255,0.1),
+    0 20px 40px rgba(0,0,0,0.4);
+}
+
+/* Floating animation */
+
+.chat-container{
+  animation:float 5s ease-in-out infinite;
+}
+
+@keyframes float{
+  0%{
+    transform:translateY(0px) rotateY(-10deg);
+  }
+  50%{
+    transform:translateY(-10px) rotateY(0deg);
+  }
+  100%{
+    transform:translateY(0px) rotateY(-10deg);
+  }
+}
+</style>
+<!-- ADD THIS AFTER <body> -->
+
+<canvas id="bgCanvas"></canvas>
+<script src="bot.js"></script>
